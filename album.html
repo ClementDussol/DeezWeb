@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <h1>DeezWeb</h1>
+        <ul>
+            <li><a href="index.html">Recherche</a></li>
+            <li><a href="favorites.html">Mes favoris</a></li>
+        </ul>
+    </nav>
+
+    <div id="album" v-if="album">
+        <h2>{{ album.title }}</h2>
+        <h3>{{ album.artist.name }}</h3>
+        <img :src="album.cover_big">
+        <ul v-if="album.tracks">
+            <li v-for="track in album.tracks.data">
+                <a :href="'track.html?id=' + track.id">{{ track.title }}</a> - {{ track.duration | toMinutes }}
+            </li>
+        </ul>
+        <button><a :href="album.link">Voir l'album sur Deezer</a></button>
+    </div>
+    
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script src="javascript/album.js"></script>
+</body>
+</html>

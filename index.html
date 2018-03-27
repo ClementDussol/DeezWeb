@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body>
+    <nav>
+        <h1>DeezWeb</h1>
+        <ul>
+            <li><a href="index.html">Recherche</a></li>
+            <li><a href="favorites.html">Mes favoris</a></li>
+        </ul>
+    </nav>
+    
+    <div id="search">
+        <h2>Rechercher sur Deezer</h2>
+        <div class="search-container">
+            <input type="text" v-model="searchParam">
+    
+            <select v-model="searchOrder">
+                <option value="">Trier les résultats par ... </option>
+                
+                <option value="ALBUM_ASC">  Album   </option>
+                <option value="ARTIST_ASC"> Artiste </option>
+                <option value="TRACK_ASC">  Titre   </option>
+                <option value="RATING">     Note    </option>
+                <option value="RANKING">    Rang    </option>
+            </select>
+                
+            <i @click="search(searchParam)" class="fa fa-search fa-2x"></i>
+        </div>
+
+        
+        <h2 v-if="searchResults.length">Résultats de la recherche</h2>
+        
+        <ul>
+            <li v-for="item in searchResults" class="item">
+                
+                <div class="image-container">
+                    <i @click="toggleFavorite(item)" class="fa fa-2x" :class="'fa-heart' + (item.isFavorite ? '' : '-o')"></i>
+                    <img :src="item.album.cover_big">
+                </div>
+                
+                <div class="right">
+                    <div class="info-container">
+                        <p class="title">    {{ item.title }}                                </p>
+                        <p class="info">     {{ item.artist.name }} - {{ item.album.title }} </p>
+                        <p class="duration"> {{ item.duration | toMinutes }}                 </p>
+                    </div>
+            
+                    <div class="links-container">
+                        <a :href="'track.html?id='  + item.id">       <button class="fa fa-volume-up fa-2x" aria-hidden="true"></i> </button></a>
+                        <a :href="'album.html?id='  + item.album.id"> <button class="album"> Consulter l'album           </button></a>
+                        <a :href="'artist.html?id=' + item.artist.id"><button class="artist"> Voir la fiche de l'artiste </button></a>
+                    </div>
+                </div>
+
+            </li>
+        
+        </ul>
+        
+        <button v-if="nextURL" @click="next()">next</button>
+        
+        <script src="node_modules/vue/dist/vue.min.js"></script>
+        <script src="javascript/search.js"></script>
+    </div>
+</body>
+</html>
