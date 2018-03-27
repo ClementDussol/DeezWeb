@@ -7,7 +7,7 @@
             track : null,
         },
         filters : {
-            toMinutes : sec    => Math.floor(sec / 60) + "m" + sec % 60 + "s",
+            toMinutes : sec => Math.floor(sec / 60) + "m" + sec % 60 + "s",
         }
     });
     fetch(rootURL + trackId)

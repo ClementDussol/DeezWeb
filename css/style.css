@@ -7,7 +7,7 @@
     font-family: 'Open Sans', sans-serif;
 }
 body {
-    background-color: rgb(211, 211, 211);
+    background-color: white;
 }
 ul {
     list-style: none;
@@ -15,18 +15,25 @@ ul {
 nav {
     background-color: rgb(25, 9, 65);
     padding: 0 10%;
+    box-shadow: 0 8px 0 tomato;
 }
 nav h1 {
     display: inline-block;
-    color: indianred;
+    color: tomato;
+    margin-right: 1em; 
 }
 nav * {
     color: honeydew;
 }
 nav a {
     display: block;
-    padding:  2em 0 2em 2em;
+    padding:  2em;
     text-decoration: none;
+}
+nav a.active {
+    font-weight: bold;
+    color: rgb(253, 226, 191);
+    box-shadow: 0 8px 0 rgb(0, 201, 201);
 }
 nav ul {
     display: inline-flex;
@@ -34,7 +41,37 @@ nav ul {
 button {
     border: none;
 }
-#search {
+img {
+    display: block;
+}
+
+@keyframes loader {
+    0%   { transform: rotate(0deg);   }
+    100% { transform: rotate(360deg); }
+}
+
+#loader-container {
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+#loader {
+    width:  64px;
+    height: 64px;
+    border: 16px solid rgb(253, 226, 191);
+    border-top-color: rgb(0, 201, 201);
+    border-radius: 100%;
+    margin: 0 auto;
+
+    animation-name: loader;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+
+
+#search, #album, #track, #artist {
     width: 80%;
     margin: 4em auto;
 }
@@ -50,7 +87,7 @@ button {
     padding: 1.25em;
 }
 #search .search-container i {
-    background-color: darkcyan;
+    background-color:tomato;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     color: rgb(253, 226, 191);
@@ -71,62 +108,87 @@ button {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     font-size: 24px;
+    background-color: rgb(231, 231, 231);
 }
 #search select {
     flex: 1;
     border: none;
-    background-color: rgb(253, 226, 191);
+    font-size: 16px;
+    background-color: rgb(240, 240, 240);
 }
-#search ul {
+#search ul, #album ul {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     list-style: none;
+    margin-bottom: 1em;
 }
-#search .item {
+#search .item, #album .track {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.5em 0;
+    height: 48px;
     background-color: #fff;
-    box-shadow: 0px 8px 8px #ccc;
+    vertical-align: center;
+    border-bottom: 1px solid #ccc;
 }
-#search .item .right {
-    flex: 1;
+
+.item.legend .title {
+    margin-left: 96px;
 }
-#search .item .image-container {
-    width: 128px;
+.item p, #album .track p {
+    padding: 12px;
+    color: rgb(163, 177, 190);
 }
-#search .item .info-container * {
-    padding: 8px 16px;
+.item a, #album a {
+    color: slategrey;
+    text-decoration: none;
+    font-weight: normal;
 }
-#search .item .links-container {
-    display: flex;
+.item a:hover, #album a:hover {
+    color: rgb(0, 201, 201);
+    font-weight: normal;
 }
-#search .item .links-container .album, #search .item .links-container .artist {
-    flex: 1;
-}
-#search .item .title {
-    font-weight: bold;
-}
-#search .item i {
-    position: absolute;
-    padding: 8px;
-    background-color: white;
+#search .item i.fa-heart-o {
+    color: #aaa;
     cursor: pointer;
 }
-#search .item i:hover, #search .item i.fa-heart {
+#search .item i.fa-heart-o:hover {
     color: tomato;
 }
-#search .item button {
-    height: 48px;
-    padding: 12px 12px;
-    display: block;
-    width: 100%;
+#search .item i.fa-heart {
+    color: tomato;
 }
-#search .item a {
-    text-decoration: none;
+#search .item img{
+    width: 48px;
 }
-#search .item img {
-    width: 100%;
+
+#search .item i {
+    font-size: 24px;
+    padding: 12px;
+}
+
+#search .item .title {
+    font-weight: bold;
+    width: 40%;
+}
+
+#search .item .album {
+    width: 20%;
+}
+
+#search .item .artist {
+    width: 20%;
+}
+
+#album img {
+    flex: 1;
+}
+#album .content-container {
+    display: flex;
+}
+
+#album .track .title {
+    margin-left: 12px;
+    width: 80%;
 }

@@ -3,6 +3,7 @@
     const app = new Vue({
         el : "#search",
         data : {
+            loading : false,
             searchParam : "",
             searchOrder : "",
             searchResults : [],
@@ -17,7 +18,6 @@
                 }else{
                     favorites = favorites.filter(otherItem => otherItem.id != item.id);
                 }
-                console.log(favorites);
                 localStorage.setItem('favorites', JSON.stringify(favorites));
             },
             processFavorites(items){
@@ -26,26 +26,44 @@
                 return items;
             },
             search(){
+                this.loading = true;
                 fetch(rootURL + this.searchParam + (this.searchOrder ? "&order=" + this.searchOrder : ''))
                     .then(res => res.json())
                     .then(res => {
                         let items = this.processFavorites(res.data);
                         this.nextURL = res.next;
                         this.searchResults = items;
+                        this.loading = false;
                     });
             },
             next(){
-                fetch("https://cors-anywhere.herokuapp.com/" + this.nextURL)
+                if(this.loading) return;
+                this.loading = true;
+                return fetch("https://cors-anywhere.herokuapp.com/" + this.nextURL)
                     .then(res => res.json())
                     .then(res => {
                         let items = this.processFavorites(res.data);
                         this.nextURL = res.next;
-                        this.searchResults = items;
+                        this.searchResults = this.searchResults.concat(items);
+                        debugger;
+
+                        this.loading = false;
                     });
             }
         },
         filters : {
-            toMinutes   : sec  => Math.floor(sec / 60) + "m" + sec % 60,
+            toMinutes   : sec  => Math.floor(sec / 60) + ":" + sec % 60,
+        },
+        created(){
+            window.onscroll = () => {
+                let d = document.documentElement;
+                let offset = d.scrollTop + window.innerHeight;
+                let height = d.offsetHeight;
+
+                if (offset >= height) {
+                    this.next();
+                }
+            };
         }
     });
 })();

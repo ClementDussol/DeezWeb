@@ -12,12 +12,12 @@
     <nav>
         <h1>DeezWeb</h1>
         <ul>
-            <li><a href="index.html">Recherche</a></li>
-            <li><a href="favorites.html">Mes favoris</a></li>
+            <li><a href="index.html" class="active"> Recherche   </a></li>
+            <li><a href="favorites.html">            Mes favoris </a></li>
         </ul>
     </nav>
     
-    <div id="search">
+    <div id="search" onscroll="scrolled(this)">
         <h2>Rechercher sur Deezer</h2>
         <div class="search-container">
             <input type="text" v-model="searchParam">
@@ -34,38 +34,33 @@
                 
             <i @click="search(searchParam)" class="fa fa-search fa-2x"></i>
         </div>
-
         
         <h2 v-if="searchResults.length">Résultats de la recherche</h2>
         
         <ul>
-            <li v-for="item in searchResults" class="item">
-                
-                <div class="image-container">
-                    <i @click="toggleFavorite(item)" class="fa fa-2x" :class="'fa-heart' + (item.isFavorite ? '' : '-o')"></i>
-                    <img :src="item.album.cover_big">
-                </div>
-                
-                <div class="right">
-                    <div class="info-container">
-                        <p class="title">    {{ item.title }}                                </p>
-                        <p class="info">     {{ item.artist.name }} - {{ item.album.title }} </p>
-                        <p class="duration"> {{ item.duration | toMinutes }}                 </p>
-                    </div>
-            
-                    <div class="links-container">
-                        <a :href="'track.html?id='  + item.id">       <button class="fa fa-volume-up fa-2x" aria-hidden="true"></i> </button></a>
-                        <a :href="'album.html?id='  + item.album.id"> <button class="album"> Consulter l'album           </button></a>
-                        <a :href="'artist.html?id=' + item.artist.id"><button class="artist"> Voir la fiche de l'artiste </button></a>
-                    </div>
-                </div>
-
+            <li v-if="searchResults.length" class="item legend">                        
+                <p class="title" > TITRE   </p>
+                <p class="artist"> ARTISTE </p>
+                <p class="album" > ALBUM   </p>
+                        
+                <p class="duration"> DUREE </p>
             </li>
-        
+            <li v-for="item in searchResults" class="item">
+                <img :src="item.album.cover_small">
+                <i @click="toggleFavorite(item)" class="fa" :class="'fa-heart' + (item.isFavorite ? '' : '-o')"></i>
+                
+                <p class="title" > <a :href="'track.html?id='  + item.id"       > {{ item.title }}       </a> </p>
+                <p class="artist"> <a :href="'artist.html?id=' + item.artist.id"> {{ item.artist.name }} </a> </p>
+                <p class="album" > <a :href="'album.html?id='  + item.album.id" > {{ item.album.title }} </a> </p>
+                
+                <p class="duration"> {{ item.duration | toMinutes }} </p>
+            </li>
         </ul>
-        
-        <button v-if="nextURL" @click="next()">next</button>
-        
+
+        <div v-if="loading" id="loader-container">
+            <div id="loader"></div>
+        </div>
+                
         <script src="node_modules/vue/dist/vue.min.js"></script>
         <script src="javascript/search.js"></script>
     </div>

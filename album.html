@@ -11,21 +11,38 @@
     <nav>
         <h1>DeezWeb</h1>
         <ul>
-            <li><a href="index.html">Recherche</a></li>
-            <li><a href="favorites.html">Mes favoris</a></li>
+            <li><a href="index.html">     Recherche   </a></li>
+            <li><a href="favorites.html"> Mes favoris </a></li>
         </ul>
     </nav>
 
-    <div id="album" v-if="album">
-        <h2>{{ album.title }}</h2>
-        <h3>{{ album.artist.name }}</h3>
-        <img :src="album.cover_big">
-        <ul v-if="album.tracks">
-            <li v-for="track in album.tracks.data">
-                <a :href="'track.html?id=' + track.id">{{ track.title }}</a> - {{ track.duration | toMinutes }}
-            </li>
-        </ul>
-        <button><a :href="album.link">Voir l'album sur Deezer</a></button>
+    <div id="album">
+        
+        <!-- CONTENT -->
+        <div v-if="album">
+            <img :src="album.cover_medium">
+            <div class="infos-container">
+                <h2 class="title">{{ album.title }}</h2>
+                <h3><a :href="'artist.html?id=' + album.artist.id" class="artist">{{ album.artist.name }}</a></h3>
+            </div> 
+                <ul class="tracks">
+                    <li class="track">
+                        <p class="title"> TITRE </p>
+                        <p>               DUREE </p>
+                    </li>
+                    <li class="track" v-for="track in album.tracks.data">
+                        <p class="title"><a :href="'track.html?id=' + track.id">{{ track.title }}</a></p>
+                        <p>{{ track.duration | toMinutes }}</p>
+                    </li>
+                </ul>
+            <button><a :href="album.link">Voir l'album sur Deezer</a></button>
+        </div>
+    
+        <!-- LOADER -->
+        <div v-if="loading" id="loader-container">
+            <div id="loader"></div>
+        </div>
+    
     </div>
     
     <script src="node_modules/vue/dist/vue.min.js"></script>
