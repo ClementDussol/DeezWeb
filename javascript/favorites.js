@@ -2,7 +2,7 @@
     const app = new Vue({
         el : "#favorites",
         data : {
-            favorites : null,
+            favorites : JSON.parse(localStorage.getItem('favorites')) || [],
         },
         methods : {
             removeFavorite(item){
@@ -14,6 +14,4 @@
             toMinutes : sec => Math.floor(sec / 60) + "m" + sec % 60 + "s",
         }
     });
-
-    app.favorites = JSON.parse(localStorage.getItem('favorites'));
 })();

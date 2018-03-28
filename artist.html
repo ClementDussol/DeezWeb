@@ -16,14 +16,23 @@
         </ul>
     </nav>
 
-    <div id="artist" v-if="artist">
-        <h1>{{ artist.name }}</h1>
-        <img :src="artist.picture_big">
+    <div id="artist">
+        <div v-if="artist">
+            <img :src="artist.picture_big">
         
-        <p>Nombre d'albums : {{ artist.nb_album }}</p>
-        <p>Nombre de fans : {{ artist.nb_fan }}</p>
-        
-        <button><a :href="artist.link">Voir l'artiste sur deezer</a></button>
+            <div class="infos-container">
+                <h2>{{ artist.name }}</h2>
+            
+                <p>Nombre d'albums : {{ artist.nb_album }}</p>
+                <p>Nombre de fans : {{ artist.nb_fan }}</p>
+
+                <a :href="artist.link"><button>Voir l'artiste sur deezer</button></a>
+            </div>
+        <div>
+
+        <div v-if="loading" id="loader-container">
+            <div id="loader"></div>
+        </div>
     </div>
 
     <script src="node_modules/vue/dist/vue.min.js"></script>

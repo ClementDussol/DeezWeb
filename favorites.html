@@ -17,11 +17,24 @@
         </ul>
     </nav>
     
-    <div id="favorites" v-if="favorites">
-        <h1>Mes titres favoris</h1>
+    <div id="favorites" v-if="favorites.length">
+        <h2>Mes titres favoris</h2>
         <ul>
-            <li v-for="favorite in favorites">
-                <i class="fa fa-heart"></i>{{ favorite.title }}<i class="fa fa-times" @click="removeFavorite(favorite)"></i>
+            <li v-if="favorites.length" class="item legend">                        
+                <p class="title" > TITRE   </p>
+                <p class="artist"> ARTISTE </p>
+                <p class="album" > ALBUM   </p>
+                                
+                <p class="duration"> DUREE </p>
+            </li>
+            <li v-for="favorite in favorites" class="item">
+                <i class="fa fa-times fa-2x" @click="removeFavorite(favorite)"></i>
+                
+                <p class="title" > <a :href="'track.html?id='  + favorite.id"       > {{ favorite.title }}       </a> </p>
+                <p class="artist"> <a :href="'artist.html?id=' + favorite.artist.id"> {{ favorite.artist.name }} </a> </p>
+                <p class="album" > <a :href="'album.html?id='  + favorite.album.id" > {{ favorite.album.title }} </a> </p>
+                
+                <p class="duration"> {{ favorite.duration | toMinutes }} </p>
             </li>
         </ul>
     </div>

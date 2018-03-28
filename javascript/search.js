@@ -31,9 +31,9 @@
                     .then(res => res.json())
                     .then(res => {
                         let items = this.processFavorites(res.data);
-                        this.nextURL = res.next;
+                        this.loading       = false;
+                        this.nextURL       = res.next;
                         this.searchResults = items;
-                        this.loading = false;
                     });
             },
             next(){
@@ -43,16 +43,14 @@
                     .then(res => res.json())
                     .then(res => {
                         let items = this.processFavorites(res.data);
-                        this.nextURL = res.next;
+                        this.loading       = false;
+                        this.nextURL       = res.next;
                         this.searchResults = this.searchResults.concat(items);
-                        debugger;
-
-                        this.loading = false;
                     });
             }
         },
         filters : {
-            toMinutes   : sec  => Math.floor(sec / 60) + ":" + sec % 60,
+            toMinutes : sec => Math.floor(sec / 60) + ":" + ((sec % 60 + '').length == 1 ? '0' + sec % 60 : sec % 60),
         },
         created(){
             window.onscroll = () => {

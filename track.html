@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 <body>
     <nav>
@@ -16,23 +17,39 @@
         </ul>
     </nav>
 
-    <div id="track" v-if="track">
-        {{ track }}
-        <h1>Titre : {{ track.title }}</h1>
+    <div id="track">
         
-        <div class="album">
-            <img :src="track.album.cover_medium">
-            <p>Album : <a :href="'album.html?id=' + track.album.id">{{ track.album.title }}</a></p>
-        </div>
-        
-        <div class="artist">
-            <img :src="track.artist.picture_medium">
-            <p>Artiste : <a :href="'artist.html?id=' + track.artist.id">{{ track.artist.name }}</a></p>
+        <div v-if="track">
+            <div class="infos-container">
+                <h2>{{ track.title }}</h2>
+                <p>Date de sortie : {{ track.release_date | toLocaleDate }}</p>
+                <p>Durée : {{ track.duration | toMinutes }} </p>
+            </div>
+
+            <div class="links-container">
+                <audio controls>
+                    <source :src="track.preview" type="audio/mp3">
+                </audio>
+                <i @click="toggleFavorite(track)" class="fa fa-3x" :class="'fa-heart' + (track.isFavorite ? '' : '-o')"></i>
+                <a :href="track.link"><button>Voir le titre sur deezer</button></a>
+            </div>
+
+            <div class="album-artist-container">
+                <div class="album">
+                    <img :src="track.album.cover_medium">
+                    <p>Album : <a :href="'album.html?id=' + track.album.id">{{ track.album.title }}</a></p>
+                </div>
+                        
+                <div class="artist">
+                    <img :src="track.artist.picture_medium">
+                    <p>Artiste : <a :href="'artist.html?id=' + track.artist.id">{{ track.artist.name }}</a></p>
+                </div>
+            </div>
         </div>
 
-        <audio controls>
-                <source :src="track.preview" type="audio/mp3">
-        </audio>
+        <div v-if="loading" id="loader-container">
+            <div id="loader"></div>
+        </div>
     </div>
 
     <script src="node_modules/vue/dist/vue.min.js"></script>

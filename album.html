@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 <body>
     <nav>
@@ -21,21 +22,29 @@
         <!-- CONTENT -->
         <div v-if="album">
             <img :src="album.cover_medium">
+            
             <div class="infos-container">
                 <h2 class="title">{{ album.title }}</h2>
                 <h3><a :href="'artist.html?id=' + album.artist.id" class="artist">{{ album.artist.name }}</a></h3>
+                <p>Date de sortie : {{ album.release_date | toLocaleDate }}</p>
+                <p>Durée : {{ album.duration | toHoursMinutes }}</p>
+                <p>Genre : {{ album.genres.data[0].name }} </p>
+
+                <a :href="album.link"><button>Voir l'album sur Deezer</button></a>
             </div> 
-                <ul class="tracks">
-                    <li class="track">
-                        <p class="title"> TITRE </p>
-                        <p>               DUREE </p>
-                    </li>
-                    <li class="track" v-for="track in album.tracks.data">
-                        <p class="title"><a :href="'track.html?id=' + track.id">{{ track.title }}</a></p>
-                        <p>{{ track.duration | toMinutes }}</p>
-                    </li>
-                </ul>
-            <button><a :href="album.link">Voir l'album sur Deezer</a></button>
+            
+            <ul class="tracks">
+                <li class="track">
+                    <p class="title"> TITRE </p>
+                    <p>               DUREE </p>
+                </li>
+                <li class="track" v-for="track in album.tracks.data">
+                    <i @click="toggleFavorite(track)" class="fa" :class="'fa-heart' + (track.isFavorite ? '' : '-o')"></i>
+                    <p class="title"><a :href="'track.html?id=' + track.id">{{ track.title }}</a></p>
+                    <p>{{ track.duration | toMinutes }}</p>
+                </li>
+            </ul>
+            
         </div>
     
         <!-- LOADER -->

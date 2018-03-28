@@ -29,11 +29,18 @@ nav a {
     display: block;
     padding:  2em;
     text-decoration: none;
+    transition: all 0.2s;
 }
 nav a.active {
     font-weight: bold;
     color: rgb(253, 226, 191);
     box-shadow: 0 8px 0 rgb(0, 201, 201);
+    background-color: rgb(16, 28, 100);
+}
+nav a:hover {
+    background-color: rgb(16, 28, 100);
+    color: white;
+    transition: all 0.2s;
 }
 nav ul {
     display: inline-flex;
@@ -71,7 +78,7 @@ img {
 
 
 
-#search, #album, #track, #artist {
+#search, #album, #track, #artist, #favorites {
     width: 80%;
     margin: 4em auto;
 }
@@ -85,6 +92,7 @@ img {
     height: 64px;
     display: block;
     padding: 1.25em;
+    transition: all 0.2s;
 }
 #search .search-container i {
     background-color:tomato;
@@ -100,6 +108,8 @@ img {
 }
 #search .search-container *:focus {
     outline: none;
+    border-left: 8px solid rgb(0, 201, 201); 
+    transition: all 0.2s;
 }
 #search input {
     width: 70%;
@@ -116,14 +126,14 @@ img {
     font-size: 16px;
     background-color: rgb(240, 240, 240);
 }
-#search ul, #album ul {
+#search ul, #album ul, #favorites ul {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     list-style: none;
     margin-bottom: 1em;
 }
-#search .item, #album .track {
+.item, #album .track, #favorites li {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -136,59 +146,171 @@ img {
 .item.legend .title {
     margin-left: 96px;
 }
-.item p, #album .track p {
+.item p, #album .track p, #favorites p {
     padding: 12px;
     color: rgb(163, 177, 190);
 }
-.item a, #album a {
+.item a, #album a, #track a, #favorites a {
     color: slategrey;
     text-decoration: none;
     font-weight: normal;
 }
-.item a:hover, #album a:hover {
+.item a:hover, #album a:hover, #track a:hover, #favorites a:hover {
     color: rgb(0, 201, 201);
     font-weight: normal;
 }
-#search .item i.fa-heart-o {
-    color: #aaa;
+i.fa {
     cursor: pointer;
+    transition: all 0.2s;
 }
-#search .item i.fa-heart-o:hover {
+i.fa-heart-o, i.fa-times {
+    color: #aaa;
+}
+i.fa-heart-o:hover, i.fa-times:hover {
     color: tomato;
+    transition: all 0.2s;
 }
-#search .item i.fa-heart {
+i.fa-heart {
     color: tomato;
 }
 #search .item img{
     width: 48px;
 }
 
-#search .item i {
+.item i, .track i {
     font-size: 24px;
     padding: 12px;
 }
 
-#search .item .title {
+.item .title {
     font-weight: bold;
     width: 40%;
 }
 
-#search .item .album {
+.item .album {
     width: 20%;
 }
 
-#search .item .artist {
+.item .artist {
     width: 20%;
 }
 
 #album img {
-    flex: 1;
+    width: 20%;
+    height: 20%;
+    border-radius: 8px;
 }
-#album .content-container {
+#album > div {
     display: flex;
+    flex-wrap: wrap;
+}
+.infos-container {
+    padding: 0 2em;
+    width: 75%;
+    position: relative;
+}
+.infos-container p {
+    font-size: 16px;
+    color : #aaa;
+    border-left: 8px solid rgb(0, 201, 201);
+    padding: 0.33em 1em;
 }
 
+a button {
+    padding: 1em 1.5em;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: tomato;
+    color: rgb(253, 226, 191);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: absolute;
+    bottom: 0;
+}
+
+a button:hover {
+    background-color: rgb(0, 201, 201);
+    color: white;
+    transition: all 0.2s;
+}
+
+#album h3, #artist h2, #track h2 {
+    margin-bottom: 1.33em;
+}
+#album ul {
+    margin-top: 2em; 
+    width: 100%;
+}
+#album .track .title:nth-child(1){
+    margin-left: 48px;
+}
 #album .track .title {
-    margin-left: 12px;
     width: 80%;
+}
+
+#artist > div {
+    display: flex;
+}
+#artist img {
+    width: 33.33%;
+    height: 33.33%;
+    border-radius : 8px; 
+}
+
+#track > div {
+    display: flex;
+    flex-wrap: wrap;
+}
+#track .infos-container {
+    width: 33.33%;
+    padding: 0;
+}
+#track .links-container {
+    width: 66.66%;
+    position: relative;
+}
+#track audio {
+    width: 100%;
+    box-shadow: 0 8px 0 rgb(0, 201, 201);
+}
+#track img {
+    width : fit-content;
+    height: fit-content;
+    border-radius: 4px;
+    object-fit: contain;
+}
+#track .album-artist-container {
+    margin-top: 2em;
+    padding-top: 2em;
+    border-top: 4px solid #ddd; 
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+#track .album, #track .artist {
+    display: flex;
+    align-items: center;
+    width: 48%;
+    flex-wrap: wrap;
+}
+#track button {
+    right: 0;
+}
+#track i {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+#track .album p, #track .artist p {
+    font-size: 24px;
+    margin-left: 1.2em; 
+}
+
+#favorites li {
+    width: 100%;
+    display: flex;
+}
+#favorites .legend .title {
+    margin-left: 44px; 
 }
