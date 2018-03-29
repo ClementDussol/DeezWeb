@@ -1,5 +1,5 @@
 (()=>{
-    const rootURL = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=";
+    const rootURL = "https://api.deezer.com/search";
     const app = new Vue({
         el : "#search",
         data : {
@@ -27,26 +27,23 @@
             },
             search(){
                 this.loading = true;
-                fetch(rootURL + this.searchParam + (this.searchOrder ? "&order=" + this.searchOrder : ''))
-                    .then(res => res.json())
-                    .then(res => {
-                        let items = this.processFavorites(res.data);
-                        this.loading       = false;
-                        this.nextURL       = res.next;
-                        this.searchResults = items;
-                    });
+                let url = createUrl(rootURL, {q : this.searchParam, order : this.searchOrder});
+                fetchJSONP(url).then(res => {
+                    let items = this.processFavorites(res.data);
+                    this.loading       = false;
+                    this.nextURL       = res.next;
+                    this.searchResults = items;
+                });
             },
             next(){
                 if(this.loading) return;
                 this.loading = true;
-                return fetch("https://cors-anywhere.herokuapp.com/" + this.nextURL)
-                    .then(res => res.json())
-                    .then(res => {
-                        let items = this.processFavorites(res.data);
-                        this.loading       = false;
-                        this.nextURL       = res.next;
-                        this.searchResults = this.searchResults.concat(items);
-                    });
+                fetch(this.nextURL).then(res => {
+                    let items = this.processFavorites(res.data);
+                    this.loading       = false;
+                    this.nextURL       = res.next;
+                    this.searchResults = this.searchResults.concat(items);
+                });
             }
         },
         filters : {

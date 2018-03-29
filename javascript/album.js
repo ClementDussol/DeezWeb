@@ -10,7 +10,7 @@
         filters : {
             toMinutes      : sec  => Math.floor(sec / 60) + ":" + ((sec % 60 + '').length == 1 ? '0' + sec % 60 : sec % 60),
             toHoursMinutes : sec  => Math.floor(sec / 3600) + ':' + Math.floor(sec / 60) + ":" + ((sec % 60 + '').length == 1 ? '0' + sec % 60 : sec % 60), 
-            toLocaleDate   : date => new Date(date).toLocaleDateString(), 
+            toLocaleDate   : date => new Date(date).toLocaleDateString(),
         },
         methods : {
             processFavorites(items){

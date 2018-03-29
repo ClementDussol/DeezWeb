@@ -19,10 +19,11 @@
     
     <div id="search" onscroll="scrolled(this)">
         <h2>Rechercher sur Deezer</h2>
+        
         <div class="search-container">
-            <input type="text" v-model="searchParam">
+            <input @keyup.enter="search()" type="text" name="q" v-model="searchParam">
     
-            <select v-model="searchOrder">
+            <select name="order" v-model="searchOrder">
                 <option value="">Trier les résultats par ... </option>
                 
                 <option value="ALBUM_ASC">  Album   </option>
@@ -32,7 +33,7 @@
                 <option value="RANKING">    Rang    </option>
             </select>
                 
-            <i @click="search(searchParam)" class="fa fa-search fa-2x"></i>
+            <i @click="search()" class="fa fa-search fa-2x"></i>
         </div>
         
         <h2 v-if="searchResults.length">Résultats de la recherche</h2>
@@ -62,6 +63,7 @@
         </div>
                 
         <script src="node_modules/vue/dist/vue.min.js"></script>
+        <script src="javascript/utils.js"></script>
         <script src="javascript/search.js"></script>
     </div>
 </body>
